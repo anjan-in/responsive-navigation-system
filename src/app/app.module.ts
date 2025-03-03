@@ -6,8 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HomeComponent } from './pages/home/home.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { SettingsComponent } from './pages/settings/settings.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,12 +14,11 @@ import { SettingsComponent } from './pages/settings/settings.component';
     NavbarComponent,
     SidebarComponent,
     HomeComponent,
-    DashboardComponent,
-    SettingsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
