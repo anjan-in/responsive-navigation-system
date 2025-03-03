@@ -1,12 +1,41 @@
 .navbar {
-  padding: 0.8rem 1rem;
+  padding: 0.8rem 1.2rem;
+  background: #212529;
 }
 
 .navbar-nav .nav-link {
   color: white;
-  transition: 0.3s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease-in-out;
+  
+  i {
+    font-size: 1.2rem;
+  }
 }
 
 .navbar-nav .nav-link:hover {
   color: #f8d210;
+  transform: translateY(-2px);
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+// Fix dropdown hover issue on mobile
+@media (max-width: 991px) {
+  .dropdown-menu {
+    position: absolute !important;
+    display: none;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 }
