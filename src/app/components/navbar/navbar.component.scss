@@ -28,6 +28,28 @@
   object-fit: cover;
 }
 
+.dropdown-menu {
+  min-width: 180px;
+}
+
+/* Position submenus to the right */
+.dropdown-menu .dropdown-menu {
+  left: 100%;
+  top: 0;
+  margin-left: 0.5rem;
+  display: none;
+  position: absolute;
+}
+
+/* Show submenu on hover */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu > li:hover > .dropdown-menu {
+  display: block;
+}
+
 // Fix dropdown hover issue on mobile
 @media (max-width: 991px) {
   .dropdown-menu {
