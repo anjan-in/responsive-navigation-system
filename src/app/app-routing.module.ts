@@ -13,12 +13,12 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent,},
   // { path: 'dashboard', component: DashboardComponent,},
   // { path: 'settings', component: SettingsComponent,},
-  { 
-    path: 'settings', children: [
-      { path: 'general', component: GeneralSettingsComponent },
-      { path: 'security', component: SecuritySettingsComponent }
-    ]
-  },
+  // { 
+  //   path: 'settings', children: [
+  //     { path: 'general', component: GeneralSettingsComponent },
+  //     { path: 'security', component: SecuritySettingsComponent }
+  //   ]
+  // },
   { path: 'profile', component: ProfileComponent },
   { path: 'dashbaord', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard] },
   { path: 'settings', loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule), canActivate: [AuthGuard] },
