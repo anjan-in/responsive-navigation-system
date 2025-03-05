@@ -1,49 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand fw-bold text-uppercase" href="#">LOGO</a>
+    <a class="navbar-brand" href="#">MyApp</a>
 
-    <!-- Mobile Toggle Button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Navbar Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home">
-            <i class="bi bi-house-door"></i> Home
-          </a>
+          <a class="nav-link" routerLink="/home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard">
-            <i class="bi bi-speedometer2"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/settings">
-            <i class="bi bi-gear"></i> Settings
-          </a>
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
         </li>
 
-        <!-- Profile Dropdown -->
+        <!-- User Profile Dropdown with Multi-Level Menu -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://avatars.githubusercontent.com/u/100259545?v=4&size=64" alt="User" class="user-icon">
-            <span class="ms-2">Profile</span>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <img src="https://avatars.githubusercontent.com/u/100259545?v=4&size=64" alt="User" class="user-icon"> Profile
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" routerLink="/profile">
-              <i class="bi bi-person-circle"></i> View Profile
-            </a></li>
-            <li><a class="dropdown-item" routerLink="/settings">
-              <i class="bi bi-sliders"></i> Settings
-            </a></li>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li>
+            <li class="dropdown dropend">
+              <a class="dropdown-item dropdown-toggle" href="#" id="settingsDropdown">Settings</a>
+              <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+                <li><a class="dropdown-item" routerLink="/settings/general">General</a></li>
+                <li><a class="dropdown-item" routerLink="/settings/security">Security</a></li>
+              </ul>
+            </li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" (click)="logout()">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a></li>
+            <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
           </ul>
         </li>
       </ul>
