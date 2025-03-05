@@ -1,1 +1,38 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <h2>Dashboard</h2>
+    <button class="refresh-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+  </header>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div *ngFor="let stat of stats" class="stat-card" [ngStyle]="{'border-left-color': stat.color}">
+      <i class="bi" [ngClass]="stat.icon"></i>
+      <div>
+        <h3>{{ stat.value }}</h3>
+        <p>{{ stat.title }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activities & Charts -->
+  <div class="dashboard-content">
+    <!-- Recent Activities -->
+    <div class="activities">
+      <h3>Recent Activities</h3>
+      <ul>
+        <li *ngFor="let activity of activities">
+          <strong>{{ activity.user }}</strong> {{ activity.action }}
+          <span class="time">{{ activity.time }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Placeholder for Charts -->
+    <div class="chart-container">
+      <h3>Performance Overview</h3>
+      <p>[Chart Placeholder]</p>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,30 @@
-<p>sidebar works!</p>
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+        <h5 *ngIf="!isCollapsed">LOGO</h5>
+        <button class="toggle-btn" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+            <i class="bi" [ngClass]="isCollapsed ? 'bi-list' : 'bi-x'"></i>
+        </button>
+    </div>
+
+    <ul class="sidebar-menu" role="navigation">
+        <li *ngFor="let item of menuItems">
+            <a *ngIf="!item.submenu" (click)="handleClick(item)" [routerLink]="item.route">
+                <i class="bi" [ngClass]="item.icon"></i>
+                <span *ngIf="!isCollapsed">{{ item.label }}</span>
+            </a>
+
+            <div *ngIf="item.submenu" class="dropdown">
+                <a (click)="toggleSubMenu(item.label)" [attr.aria-expanded]="activeSubMenu === item.label">
+                    <i class="bi" [ngClass]="item.icon"></i>
+                    <span *ngIf="!isCollapsed">{{ item.label }}</span>
+                    <i class="bi bi-chevron-down dropdown-icon" [class.rotate]="activeSubMenu === item.label"></i>
+                </a>
+                <ul class="submenu" [class.open]="activeSubMenu === item.label">
+                    <li *ngFor="let sub of item.submenu">
+                        <a (click)="handleClick(sub)" [routerLink]="sub.route">{{ sub.label }}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</aside>

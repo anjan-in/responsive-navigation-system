@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Dashboard",
+    "icon": "bi-speedometer2",
+    "route": "/dashboard"
+  },
+  {
+    "label": "Settings",
+    "icon": "bi-gear",
+    "submenu": [
+      { "label": "General", "route": "/settings/general" },
+      { "label": "Security", "route": "/settings/security" }
+    ]
+  },
+  {
+    "label": "Logout",
+    "icon": "bi-box-arrow-right",
+    "route": "/login",
+    "logout": true
+  }
+]
