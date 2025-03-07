@@ -1,37 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-/* Sidebar Styling */
+/* Sidebar */
 .sidebar {
   width: 250px;
   height: 100vh;
   background: #343a40;
+  color: white;
+  transition: 0.3s ease-in-out;
   padding-top: 15px;
   position: fixed;
-  left: -250px;
-  transition: 0.3s;
-}
-
-.sidebar.open {
   left: 0;
+  top: 0;
+  overflow-y: auto;
 }
 
-.sidebar .nav-link {
-  color: white;
-  padding: 10px;
+.sidebar.collapsed {
+  width: 70px;
 }
 
-.sidebar .nav-link:hover {
-  background: #495057;
+/* Hide text when collapsed */
+.sidebar.collapsed .nav-link span {
+  display: none;
 }
 
+/* Sticky Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+
+.main-content.expanded {
+  margin-left: 70px;
+}
+
+/* Toggle Button */
 .toggle-btn {
-  background: #007bff;
-  color: white;
+  background: transparent;
   border: none;
-  padding: 10px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
-  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+}
+
+.sidebar.collapsed .toggle-btn {
+  text-align: center;
 }

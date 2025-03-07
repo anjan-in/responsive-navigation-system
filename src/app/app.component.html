@@ -1,26 +1,29 @@
-<!-- <app-navbar></app-navbar> -->
-<!-- <router-outlet></router-outlet> -->
 <div class="d-flex">
   <!-- Sidebar -->
-  <nav class="sidebar" [class.open]="isSidebarOpen">
+  <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <!-- Toggle Button Inside Sidebar -->
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
+    </button>
+
     <ul class="nav flex-column">
       <li class="nav-item">
         <a routerLink="/" class="nav-link">
-          <i class="bi bi-house-door"></i> Home
+          <i class="bi bi-house-door"></i> <span *ngIf="!isSidebarCollapsed">Home</span>
         </a>
       </li>
       <li class="nav-item">
         <a routerLink="/dashboard" class="nav-link">
-          <i class="bi bi-speedometer2"></i> Dashboard
+          <i class="bi bi-speedometer2"></i> <span *ngIf="!isSidebarCollapsed">Dashboard</span>
         </a>
       </li>
-      
+
       <!-- Dropdown for Nested Routing -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi bi-gear"></i> Settings
+        <a class="nav-link dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown">
+          <i class="bi bi-gear"></i> <span *ngIf="!isSidebarCollapsed">Settings</span>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+        <ul class="dropdown-menu">
           <li><a routerLink="/settings/profile" class="dropdown-item">Profile</a></li>
           <li><a routerLink="/settings/account" class="dropdown-item">Account</a></li>
         </ul>
@@ -28,14 +31,8 @@
     </ul>
   </nav>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+  <!-- Main Content Area -->
+  <div class="main-content" [class.expanded]="isSidebarCollapsed">
     <router-outlet></router-outlet>
   </div>
-</div>
-
-<!-- <app-sidebar></app-sidebar> -->
-<div class="content">
-  <router-outlet></router-outlet>
 </div>
