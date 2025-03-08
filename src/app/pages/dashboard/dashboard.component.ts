@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import Chart from 'chart.js/auto';
 
 interface StatCard {
   title: string;
@@ -17,9 +18,21 @@ interface Activity {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   stats: StatCard[] = [];
   activities: Activity[] = [];
+
+  selectedFilter: keyof typeof this.chartData = 'performance';
+  startDate: string = '';
+  endDate: string = '';
+  chart: any;
+
+  // Sample Data
+  chartData = {
+    performance: [12, 19, 8, 17, 23, 30],
+    revenue: [5000, 7000, 6000, 8500, 9200, 11000],
+    users: [150, 200, 250, 300, 350, 400]
+  };
 
   constructor() {}
 
@@ -39,4 +52,36 @@ export class DashboardComponent implements OnInit {
     ];
   }
 
+  ngAfterViewInit(): void {
+    this.renderChart();
+  }
+  renderChart() {
+    const ctx = document.getElementById('dashboardChart') as HTMLCanvasElement;
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    this.chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        datasets: [{
+          label: this.selectedFilter.charAt(0).toUpperCase() + this.selectedFilter.slice(1),
+          data: this.chartData[this.selectedFilter],
+          borderColor: '#007bff',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true, position: 'top' }
+        }
+      }
+    });
+  }
+
+  updateChart() {
+    this.renderChart(); // Re-render chart on filter change
+  }
 }
