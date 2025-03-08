@@ -34,6 +34,10 @@
   border-left: 5px solid;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
 }
+.stat-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
 
 .stat-card i {
   font-size: 30px;
@@ -62,4 +66,31 @@
 .time {
   color: gray;
   font-size: 12px;
+}
+
+/* Widget Cards */
+.widget-card {
+  background: #f8f9fa;
+  border-left: 5px solid #007bff;
+  transition: 0.3s;
+}
+
+.widget-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.widget-card .card-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Chart Card */
+.card {
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.form-select, .form-control {
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
