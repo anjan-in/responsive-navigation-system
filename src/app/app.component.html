@@ -1,35 +1,42 @@
+
 <div class="d-flex">
-  <!-- Sidebar -->
-  <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
-    <!-- Toggle Button Inside Sidebar -->
-    <button class="toggle-btn" (click)="toggleSidebar()">
-      <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
-    </button>
+  <!-- Sidebar Component -->
+  <div *ngIf="!isLoginPage">
+    <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
+      <!-- Toggle Button Inside Sidebar -->
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
+      </button>
 
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a routerLink="/" class="nav-link">
-          <i class="bi bi-house-door"></i> <span *ngIf="!isSidebarCollapsed">Home</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/dashboard" class="nav-link">
-          <i class="bi bi-speedometer2"></i> <span *ngIf="!isSidebarCollapsed">Dashboard</span>
-        </a>
-      </li>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a routerLink="/" class="nav-link">
+            <i class="bi bi-house-door"></i> <span *ngIf="!isSidebarCollapsed">Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/dashboard" class="nav-link">
+            <i class="bi bi-speedometer2"></i> <span *ngIf="!isSidebarCollapsed">Dashboard</span>
+          </a>
+        </li>
 
-      <!-- Dropdown for Nested Routing -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown">
-          <i class="bi bi-gear"></i> <span *ngIf="!isSidebarCollapsed">Settings</span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/settings/profile" class="dropdown-item">Profile</a></li>
-          <li><a routerLink="/settings/account" class="dropdown-item">Account</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
+        <!-- Dropdown for Nested Routing -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown">
+            <i class="bi bi-gear"></i> <span *ngIf="!isSidebarCollapsed">Settings</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a routerLink="/settings/profile" class="dropdown-item">Profile</a></li>
+            <li><a routerLink="/settings/account" class="dropdown-item">Account</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- <div *ngIf="!isLoginPage">
+    <app-sidebar></app-sidebar>
+  </div> -->
 
   <!-- Main Content Area -->
   <div class="main-content w-100" [class.expanded]="isSidebarCollapsed">
