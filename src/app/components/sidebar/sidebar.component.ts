@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface MenuItem {
   label: string;
@@ -23,7 +24,8 @@ export class SidebarComponent {
 
   constructor(
     private router: Router, 
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -49,9 +51,13 @@ export class SidebarComponent {
     }
   }
 
+  // logout() {
+  //   console.log("User logged out");
+  //   this.router.navigate(['/login']);
+  // }
+
   logout() {
-    console.log("User logged out");
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
 }

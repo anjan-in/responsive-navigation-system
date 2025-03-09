@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface StatCard {
   title: string;
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     users: [150, 200, 250, 300, 350, 400]
   };
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     // Simulating API Response
@@ -83,5 +84,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   updateChart() {
     this.renderChart(); // Re-render chart on filter change
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

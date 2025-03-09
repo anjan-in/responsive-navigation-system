@@ -39,7 +39,10 @@
   <!-- Header -->
   <header class="dashboard-header">
     <h2>Dashboard Overview</h2>
-    <button class="refresh-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+    <div class="card-toolbar">
+      <button class="refresh-btn me-3"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+      <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
   </header>
 
   <!-- Stats Cards -->
