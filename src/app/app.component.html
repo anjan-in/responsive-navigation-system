@@ -39,7 +39,11 @@
   </div> -->
 
   <!-- Main Content Area -->
-  <div class="main-content w-100" [class.expanded]="isSidebarCollapsed">
+  <div *ngIf="!isLoginPage" class="main-content w-100" [class.expanded]="isSidebarCollapsed">
     <router-outlet></router-outlet>
   </div>
+</div>
+
+<div *ngIf="isLoginPage" class="w-100">
+  <router-outlet></router-outlet>
 </div>
