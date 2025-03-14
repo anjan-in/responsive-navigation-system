@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -35,7 +36,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     users: [150, 200, 250, 300, 350, 400]
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     // Simulating API Response
@@ -88,5 +92,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

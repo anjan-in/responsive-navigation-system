@@ -8,7 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent,},
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'profile', component: ProfileComponent },
   { path: 'dashboard', loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'settings', loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule), canActivate: [AuthGuard] },
