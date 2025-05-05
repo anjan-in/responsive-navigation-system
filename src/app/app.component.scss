@@ -1,3 +1,4 @@
+@import '../styles/variables';
 
 /* Base Layout */
 .app-container {
@@ -20,7 +21,7 @@
   margin-left: 250px;
   padding: 0;
   transition: margin-left 0.3s ease;
-  background-color: #f8f9fa;
+  background-color: $light-bg;
   overflow-y: auto;
 }
 .main-content.expanded {
@@ -93,9 +94,8 @@
 }
 
 .toggle-btn:hover {
-  background: #f8f9fa;
-  color: #008080;
-  // background: rgba(255, 255, 255, 0.1);
+  background: $light-bg;
+  color: $primary-color;
 }
 
 /* Navigation Links */
@@ -127,21 +127,21 @@
   border-left: 3px solid transparent;
 }
 .nav-link:hover {
-  color: #008080;
+  color: $primary-color;
   background: rgba(0, 123, 255, 0.05);
-  border-left-color: #008080;
+  border-left-color: $primary-color;
 }
 
 .nav-item.active .nav-link {
-  color: #008080;
+  color: $primary-color;
   background: rgba(0, 123, 255, 0.08);
-  border-left-color: #008080;
+  border-left-color: $primary-color;
 }
 
 .nav-link i {
-  font-size: 18px;
-  width: 24px;
-  margin-right: 15px;
+  font-size: 1.125rem;
+  width: 1.5rem;
+  margin-right: 1rem;
   text-align: center;
 }
 
@@ -197,23 +197,23 @@
 }
 
 .submenu-link:hover {
-  color: #008080;
+  color: $primary-color;
   background: rgba(0, 123, 255, 0.05);
   // color: #ffffff;
   // background: rgba(255, 255, 255, 0.05);
 }
 
 .submenu li.active .submenu-link {
-  color: #008080;
+  color: $primary-color;
   background: rgba(0, 123, 255, 0.08);
   // color: #3498db;
   // background: rgba(52, 152, 219, 0.1);
 }
 
 .submenu-link i {
-  font-size: 14px;
-  width: 20px;
-  margin-right: 10px;
+  font-size: 0.875rem;
+  width: 1.25rem;
+  margin-right: 0.625rem;
 }
 
 /* User Profile & Logout Section */
@@ -243,7 +243,7 @@
 
 .user-name {
   margin: 0;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -252,8 +252,7 @@
 
 .user-role {
   color: #6c757d;
-  // color: #90a4ae;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 500;
 }
 
@@ -275,8 +274,8 @@
 }
 
 .logout-btn i {
-  font-size: 16px;
-  margin-right: 24px;
+  font-size: 1rem;
+  margin-right: 1.5rem;
 }
 
 .dropdown-toggle::after {
@@ -312,7 +311,7 @@
   background: transparent;
   border: none;
   color: #495057;
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
   padding: 5px;
 }
@@ -372,9 +371,9 @@
 }
 
 .mobile-user-action i {
-  width: 20px;
-  margin-right: 10px;
-  font-size: 16px;
+  width: 1.25rem;
+  margin-right: 0.625rem;
+  font-size: 1rem;
 }
 
 .mobile-logout {
@@ -443,28 +442,3 @@
     display: none;
   }
 }
-
-
-// @media (max-width: 768px) {
-//   .sidebar {
-//     position: fixed;
-//     left: 0;
-//     top: 0;
-//     transform: translateX(-100%);
-//   }
-  
-//   .sidebar:not(.collapsed) {
-//     transform: translateX(0);
-//   }
-  
-//   .sidebar.collapsed {
-//     transform: translateX(-100%);
-//   }
-  
-//   .main-content {
-//     margin-left: 0 !important;
-//   }
-//   .main-content.expanded {
-//     margin-left: 0 !important;
-//   }
-// }
