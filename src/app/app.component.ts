@@ -10,11 +10,13 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit { 
-  title = 'responsive-navigation-system';
+  // title = 'responsive-navigation-system';
   isLoginPage = false;
   isSidebarCollapsed = false;
   settingsMenuOpen = false;
   isSettingsActive = false;
+  mobileSidebarOpen = false;
+  mobileUserMenuOpen = false;
   currentUser = {
     name: 'John Doe',
     role: 'Administrator',
@@ -27,41 +29,72 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const savedState = localStorage.getItem('sidebarState');
-    if (savedState) {
-      this.isSidebarCollapsed = savedState === 'collapsed';
-    }
+    // const savedState = localStorage.getItem('sidebarState');
+    // if (savedState) {
+    //   this.isSidebarCollapsed = savedState === 'collapsed';
+    // }
 
-    this.router.events
-    .pipe(
-      filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
-    )
-    .subscribe((event: NavigationEnd) => {
-      this.isSettingsActive = event.url.includes('/settings');
-      this.handleMobileSidebarOnRouteChange();
-    });
-  
     // this.router.events
-    // .pipe(filter(event => event instanceof NavigationEnd))
-    //   .subscribe((event: NavigationEnd) => {
-    //     this.isSettingsActive = event.url.includes('/settings');
-    //     this.handleMobileSidebarOnRouteChange();
-    //   });
+    // .pipe(
+    //   filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
+    // )
+    // .subscribe((event: NavigationEnd) => {
+    //   this.isSettingsActive = event.url.includes('/settings');
+    //   this.handleMobileSidebarOnRouteChange();
+    // });
+  
+    this.router.events
+      .pipe(
+        filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
+      )
+      // .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isLoginPage = event.url.includes('/login');
+        this.isSettingsActive = event.url.includes('/settings');
+        
+        // Close mobile menus when route changes
+        this.mobileSidebarOpen = false;
+        this.mobileUserMenuOpen = false;
+      });
   }
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
     // Save state to localStorage
-    localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
+    // localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
 
-    // Update main content class to match sidebar state - this ensures proper margins
-    const mainContent = document.querySelector('.main-content');
-    if (mainContent) {
-      if (this.isSidebarCollapsed) {
-        mainContent.classList.add('expanded');
-      } else {
-        mainContent.classList.remove('expanded');
-      }
+    // // Update main content class to match sidebar state - this ensures proper margins
+    // const mainContent = document.querySelector('.main-content');
+    // if (mainContent) {
+    //   if (this.isSidebarCollapsed) {
+    //     mainContent.classList.add('expanded');
+    //   } else {
+    //     mainContent.classList.remove('expanded');
+    //   }
+    // }
+  }
+  toggleMobileSidebar(): void {
+    this.mobileSidebarOpen = !this.mobileSidebarOpen;
+    if (this.mobileSidebarOpen) {
+      // Close user menu if sidebar is opened
+      this.mobileUserMenuOpen = false;
+    }
+  }
+
+  closeMobileSidebar(): void {
+    this.mobileSidebarOpen = false;
+  }
+  onMobileNavClick(): void {
+    // Close mobile sidebar when a navigation link is clicked
+    if (window.innerWidth <= 768) {
+      this.mobileSidebarOpen = false;
+    }
+  }
+  toggleMobileUserMenu(): void {
+    this.mobileUserMenuOpen = !this.mobileUserMenuOpen;
+    if (this.mobileUserMenuOpen) {
+      // Close sidebar if user menu is opened
+      this.mobileSidebarOpen = false;
     }
   }
   toggleSettingsMenu(): void {

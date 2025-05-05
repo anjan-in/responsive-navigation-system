@@ -1,15 +1,60 @@
 <div class="app-container">
+  <!-- Mobile Topbar (Shows on small screens) -->
+  <div *ngIf="!isLoginPage" class="mobile-topbar">
+    <div class="mobile-topbar-content">
+      <div class="d-flex">
+        <button class="mobile-menu-toggle" (click)="toggleMobileSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
+  
+        <div class="logo" style="margin-left: 0.25rem;">
+          <img src="../assets/images/logo_cybersmart.png" alt="Logo" class="mobile-logo">
+        </div>
+      </div>
+
+      <div class="mobile-user-menu">
+        <button class="mobile-user-toggle" (click)="toggleMobileUserMenu()">
+          <img src="../../../assets/images/Anjan1.jpg" alt="User" class="avatar">
+        </button>
+        
+        <div class="mobile-user-dropdown" [ngClass]="{'show': mobileUserMenuOpen}">
+          <div class="mobile-user-info">
+            <h6 class="user-name">John Doe</h6>
+            <small class="user-role">Administrator</small>
+          </div>
+          
+          <div class="mobile-user-actions">
+            <a routerLink="/settings/profile" class="mobile-user-action">
+              <i class="bi bi-person"></i>
+              <span>Profile</span>
+            </a>
+            <a routerLink="/settings/account" class="mobile-user-action">
+              <i class="bi bi-shield-lock"></i>
+              <span>Account</span>
+            </a>
+            <a class="mobile-user-action mobile-logout" (click)="onLogout()">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  <!-- <div *ngIf="!isLoginPage" class="mobile-sidebar-overlay" [ngClass]="{'show': mobileSidebarOpen}" (click)="closeMobileSidebar()"></div> -->
+
   <!-- Sidebar Component -->
   <div *ngIf="!isLoginPage" class="sidebar-wrapper">
-    <!-- <app-sidebar></app-sidebar> -->
-    <nav class="sidebar" [ngClass]="{'collapsed': isSidebarCollapsed}">
+    <nav class="sidebar" [ngClass]="{'collapsed': isSidebarCollapsed, 'show-mobile': mobileSidebarOpen}">
       <!-- Logo / Brand Section -->
       <div class="sidebar-header">
         <div class="logo">
           <img *ngIf="isSidebarCollapsed" src="../assets/images/CyberSmart_logo.png" alt="Logo" class="logo-icon">
           <img *ngIf="!isSidebarCollapsed" src="../assets/images/logo_cybersmart.png" alt="Logo" class="logo-full">
         </div>
-        <!-- Toggle Button Inside Sidebar -->
+        <!-- Toggle Button Inside Sidebar (Hidden on mobile) -->
         <button class="toggle-btn" (click)="toggleSidebar()">
           <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
         </button>
@@ -19,19 +64,19 @@
       <div class="nav-section">
         <ul class="nav-items">
           <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Home' : null">
+            <a routerLink="/home" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Home' : null" (click)="onMobileNavClick()">
               <i class="bi bi-house-door"></i> 
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Home</span>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/dashboard" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Dashboard' : null">
+            <a routerLink="/dashboard" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Dashboard' : null" (click)="onMobileNavClick()">
               <i class="bi bi-speedometer2"></i> 
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Dashboard</span>
             </a>
           </li>
   
-          <!-- Dropdown for Nested Routing (Better UI approach) -->
+          <!-- Dropdown for Nested Routing -->
           <li class="nav-item dropdown" [ngClass]="{'active': isSettingsActive}">
             <a class="nav-link dropdown-toggle" (click)="toggleSettingsMenu()" 
                [attr.title]="isSidebarCollapsed ? 'Settings' : null">
@@ -41,13 +86,13 @@
             </a>
             <ul class="submenu" [ngClass]="{'show': settingsMenuOpen}">
               <li routerLinkActive="active">
-                <a routerLink="/settings/profile" class="submenu-link">
+                <a routerLink="/settings/profile" class="submenu-link" (click)="onMobileNavClick()">
                   <i class="bi bi-person"></i>
                   <span>Profile</span>
                 </a>
               </li>
               <li routerLinkActive="active">
-                <a routerLink="/settings/account" class="submenu-link">
+                <a routerLink="/settings/account" class="submenu-link" (click)="onMobileNavClick()">
                   <i class="bi bi-shield-lock"></i>
                   <span>Account</span>
                 </a>
@@ -82,7 +127,7 @@
   </div>
 
   <!-- Login Page Content -->
-  <div *ngIf="isLoginPage" class="full-width">
+  <div *ngIf="isLoginPage" class="w-100">
     <router-outlet></router-outlet>
   </div>
 </div>
