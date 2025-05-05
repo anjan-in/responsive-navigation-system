@@ -1,26 +1,23 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-
-interface MenuItem {
-  label: string;
-  icon: string;
-  route?: string;
-  submenu?: MenuItem[];
-  logout?: boolean;
-}
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
-
-  isCollapsed = false;
-  activeSubMenu: string | null = null;
-  menuItems: MenuItem[] = [];
+export class SidebarComponent implements OnInit { 
+  isSidebarCollapsed = false;
+  settingsMenuOpen = false;
+  isSettingsActive = false;
+  currentUser = {
+    name: 'John Doe',
+    role: 'Administrator',
+    avatar: '../../../assets/images/Anjan1.jpg'
+  };
 
   constructor(
     private router: Router, 
@@ -28,36 +25,48 @@ export class SidebarComponent {
     private authService: AuthService
   ) {}
 
-  ngOnInit() {
-    this.http.get<MenuItem[]>('assets/menu.json').subscribe((data) => {
-      this.menuItems = data;
-    });
+  ngOnInit(): void {
+    const savedState = localStorage.getItem('sidebarState');
+    if (savedState) {
+      this.isSidebarCollapsed = savedState === 'collapsed';
+    }
+  
+    // this.router.events
+    // .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe((event: NavigationEnd) => {
+    //     this.isSettingsActive = event.url.includes('/settings');
+    //     this.handleMobileSidebarOnRouteChange();
+    //   });
   }
 
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    // Save state to localStorage
+    localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
 
-  toggleSubMenu(menuLabel: string) {
-    this.activeSubMenu = this.activeSubMenu === menuLabel ? null : menuLabel;
-  }
-
-  handleClick(item: MenuItem) {
-    if (item.logout) {
-      console.log("User logged out");
-      this.router.navigate(['/login']);
-    } else if (item.route) {
-      this.router.navigate([item.route]);
+    // Update main content class to match sidebar state - this ensures proper margins
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      if (this.isSidebarCollapsed) {
+        mainContent.classList.add('expanded');
+      } else {
+        mainContent.classList.remove('expanded');
+      }
     }
   }
-
-  // logout() {
-  //   console.log("User logged out");
-  //   this.router.navigate(['/login']);
-  // }
-
-  logout() {
-    this.authService.logout();
+  toggleSettingsMenu(): void {
+    this.settingsMenuOpen = !this.settingsMenuOpen;
   }
-
+  onLogout(): void {
+    // Add your logout logic here
+    console.log('Logging out...');
+    // Example: this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+  private handleMobileSidebarOnRouteChange(): void {
+    // Close sidebar automatically on mobile when navigating
+    if (window.innerWidth <= 768) {
+      this.isSidebarCollapsed = true;
+    }
+  }
 }
