@@ -12,3 +12,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   overflow-y: auto;
   scrollbar-width: thin;
 }
+
+/* SCSS or CSS */
+.custom-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(20, 247, 228, 0.185) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
