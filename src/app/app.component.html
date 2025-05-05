@@ -107,7 +107,7 @@
         <div class="user-profile" *ngIf="!isSidebarCollapsed">
           <img src="../../../assets/images/Anjan1.jpg" alt="User" class="avatar">
           <div class="user-info">
-            <h6 class="user-name">John Doe</h6>
+            <h6 class="user-name">Anjan Sen</h6>
             <small class="user-role">Administrator</small>
           </div>
         </div>
@@ -131,53 +131,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-
-
-<!-- <div class="d-flex">
-  Sidebar Component
-  <div *ngIf="!isLoginPage">
-    <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
-      Toggle Button Inside Sidebar
-      <button class="toggle-btn" (click)="toggleSidebar()">
-        <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
-      </button>
-
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a routerLink="/" class="nav-link">
-            <i class="bi bi-house-door"></i> <span *ngIf="!isSidebarCollapsed">Home</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/dashboard" class="nav-link">
-            <i class="bi bi-speedometer2"></i> <span *ngIf="!isSidebarCollapsed">Dashboard</span>
-          </a>
-        </li>
-
-        Dropdown for Nested Routing
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="settingsDropdown" data-bs-toggle="dropdown">
-            <i class="bi bi-gear"></i> <span *ngIf="!isSidebarCollapsed">Settings</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a routerLink="/settings/profile" class="dropdown-item">Profile</a></li>
-            <li><a routerLink="/settings/account" class="dropdown-item">Account</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-danger" (click)="onLogout()">Logout</button>
-        </li>
-      </ul>
-    </nav>
-  </div>
-
-  Main Content Area
-  <div *ngIf="!isLoginPage" class="main-content w-100" [class.expanded]="isSidebarCollapsed">
-    <router-outlet></router-outlet>
-  </div>
-</div> -->
-
-<!-- <div *ngIf="isLoginPage" class="w-100">
-  <router-outlet></router-outlet>
-</div> -->

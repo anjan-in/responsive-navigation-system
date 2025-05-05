@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   mobileSidebarOpen = false;
   mobileUserMenuOpen = false;
   currentUser = {
-    name: 'John Doe',
+    name: 'Anjan Sen',
     role: 'Administrator',
     avatar: '../../../assets/images/Anjan1.jpg'
   };
