@@ -1,47 +1,29 @@
-
-<!-- <div class="container mt-4"> -->
-  <!-- Dashboard Header -->
-  <!-- <h2 class="mb-4">Dashboard Overview</h2> -->
-
-  <!-- Filters Row -->
-  <!-- <div class="row mb-3">
-    <div class="col-md-6">
-      <label for="filterType">Select Data:</label>
-      <select class="form-select" [(ngModel)]="selectedFilter" (change)="updateChart()">
-        <option value="performance">Performance</option>
-        <option value="revenue">Revenue</option>
-        <option value="users">Users</option>
-      </select>
-    </div>
-
-    <div class="col-md-6">
-      <label for="dateRange">Select Date Range:</label>
-      <input type="date" [(ngModel)]="startDate" class="form-control" (change)="updateChart()">
-      <input type="date" [(ngModel)]="endDate" class="form-control mt-2" (change)="updateChart()">
-    </div>
-  </div> -->
-
-  <!-- Chart Section -->
-  <!-- <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Performance Analytics</h5>
-          <canvas id="dashboardChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- </div> -->
-
-
 <div class="dashboard-container">
   <!-- Header -->
   <header class="dashboard-header">
-    <h2>Dashboard Overview</h2>
+    <div>
+      <h2>Dashboard Overview</h2>
+      <p class="text-muted">Welcome back, {{ userName }}</p>
+    </div>
     <div class="card-toolbar">
-      <button class="refresh-btn me-3"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
-      <button class="btn btn-danger" (click)="logout()">Logout</button>
+      <div class="input-group search-box me-3">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input type="text" class="form-control" placeholder="Search...">
+      </div>
+      <button class="refresh-btn me-3" (click)="refreshData()">
+        <i class="bi bi-arrow-clockwise" [ngClass]="{'rotating': isRefreshing}"></i> Refresh
+      </button>
+      <!-- <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-person-circle"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" routerLink="/profile"><i class="bi bi-person"></i> Profile</a></li>
+          <li><a class="dropdown-item" routerLink="/settings"><i class="bi bi-gear"></i> Settings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+      </div> -->
     </div>
   </header>
 
@@ -59,37 +41,165 @@
   <!-- Activities & Charts -->
   <div class="dashboard-content">
     <!-- Recent Activities -->
-    <div class="activities">
+    <!-- <div class="activities">
       <h3>Recent Activities</h3>
-      <ul>
+      <div *ngIf="isLoading" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <ul *ngIf="!isLoading">
         <li *ngFor="let activity of activities">
-          <strong>{{ activity.user }}</strong> {{ activity.action }}
+          <div>
+            <span class="activity-icon" [ngClass]="getActivityIconClass(activity.type)"></span>
+            <strong>{{ activity.user }}</strong> {{ activity.action }}
+          </div>
           <span class="time">{{ activity.time }}</span>
         </li>
       </ul>
-    </div>
-
-    <div class="row mb-3 mt-5">
-      <div class="col-md-6">
-        <label for="filterType">Select Data:</label>
-        <select class="form-select" [(ngModel)]="selectedFilter" (change)="updateChart()">
-          <option value="performance">Performance</option>
-          <option value="revenue">Revenue</option>
-          <option value="users">Users</option>
-        </select>
+      <div class="text-center mt-3">
+        <button class="btn btn-sm btn-outline-primary" (click)="loadMoreActivities()">
+          Load More <i class="bi bi-chevron-down"></i>
+        </button>
       </div>
+    </div> -->
+
+    <!-- Performance Analytics -->
+    <div class="chart-container">
+      <div class="chart-header">
+        <h3>Performance Analytics</h3>
+        <div class="chart-actions">
+          <button class="btn btn-sm btn-outline-secondary me-2" (click)="downloadChart('pdf')">
+            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" (click)="downloadChart('png')">
+            <i class="bi bi-download"></i> Download
+          </button>
+        </div>
+      </div>
+
+      <div class="row mb-3 mt-4">
+        <div class="col-md-6 mb-3">
+          <label for="filterType">Select Data:</label>
+          <select class="form-select" [(ngModel)]="selectedFilter" (change)="updateChart()">
+            <option value="performance">Performance</option>
+            <option value="revenue">Revenue</option>
+            <option value="users">Users</option>
+          </select>
+        </div>
+    
+        <div class="col-md-6">
+          <label>Select Date Range:</label>
+          <div class="d-flex gap-2">
+            <input type="date" [(ngModel)]="startDate" class="form-control" (change)="updateChart()">
+            <input type="date" [(ngModel)]="endDate" class="form-control" (change)="updateChart()">
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-wrapper mt-4">
+        <canvas id="dashboardChart"></canvas>
+      </div>
+    </div>
+  </div>
   
-      <div class="col-md-6">
-        <label for="dateRange">Select Date Range:</label>
-        <input type="date" [(ngModel)]="startDate" class="form-control" (change)="updateChart()">
-        <input type="date" [(ngModel)]="endDate" class="form-control mt-2" (change)="updateChart()">
+  <!-- Bottom Widgets -->
+  <div class="bottom-widgets">
+    <!-- Tasks & Projects -->
+    <div class="widget-card tasks-widget">
+      <div class="widget-header">
+        <h3>Ongoing Projects</h3>
+        <button class="btn btn-sm btn-outline-primary">View All</button>
+      </div>
+      
+      <div class="project-list">
+        <div *ngFor="let project of projects" class="project-item">
+          <div class="project-info">
+            <h4>{{ project.name }}</h4>
+            <div class="project-meta">
+              <span><i class="bi bi-people"></i> {{ project.team }}</span>
+              <span><i class="bi bi-calendar"></i> {{ project.deadline }}</span>
+            </div>
+          </div>
+          <div class="progress-container">
+            <div class="progress">
+              <div 
+                class="progress-bar" 
+                [ngClass]="getProgressColorClass(project.progress)"
+                role="progressbar" 
+                [style.width.%]="project.progress" 
+                [attr.aria-valuenow]="project.progress" 
+                aria-valuemin="0" 
+                aria-valuemax="100">
+              </div>
+            </div>
+            <span>{{ project.progress }}%</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Placeholder for Charts -->
-    <div class="chart-container mt-4">
-      <h3>Performance Analytics</h3>
-      <canvas id="dashboardChart"></canvas>
+    <!-- Quick Stats -->
+    <div class="widget-card quick-stats">
+      <div class="widget-header">
+        <h3>System Health</h3>
+        <div class="badge bg-success">Online</div>
+      </div>
+      
+      <div class="system-metrics">
+        <div class="metric-item">
+          <div class="metric-info">
+            <span>CPU Usage</span>
+            <span>{{ systemMetrics.cpu }}%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" [style.width.%]="systemMetrics.cpu" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        
+        <div class="metric-item">
+          <div class="metric-info">
+            <span>Memory Usage</span>
+            <span>{{ systemMetrics.memory }}%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-warning" role="progressbar" [style.width.%]="systemMetrics.memory" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        
+        <div class="metric-item">
+          <div class="metric-info">
+            <span>Disk Usage</span>
+            <span>{{ systemMetrics.disk }}%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="systemMetrics.disk" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Notifications -->
+    <div class="widget-card notifications-widget">
+      <div class="widget-header">
+        <h3>Notifications</h3>
+        <button class="btn btn-sm btn-link text-primary">Mark all as read</button>
+      </div>
+      
+      <div class="notification-list">
+        <div *ngFor="let notification of notifications" class="notification-item" [ngClass]="{'unread': !notification.read}">
+          <div class="notification-icon" [ngClass]="getNotificationIconClass(notification.type)">
+            <i class="bi" [ngClass]="getNotificationIconName(notification.type)"></i>
+          </div>
+          <div class="notification-content">
+            <p>{{ notification.message }}</p>
+            <span class="notification-time">{{ notification.time }}</span>
+          </div>
+          <button class="btn btn-sm notification-action">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

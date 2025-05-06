@@ -75,6 +75,30 @@
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Dashboard</span>
             </a>
           </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/analytics" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Analytics' : null" (click)="onMobileNavClick()">
+              <i class="bi-bar-chart-fill"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Analytics</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/products" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Products' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-box-fill"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Products</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/userManagement" class="nav-link" [attr.title]="isSidebarCollapsed ? 'UserManagement' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-speedometer2"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">User Management</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/reports" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Reports' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-clipboard-data-fill"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Reports</span>
+            </a>
+          </li>
   
           <!-- Dropdown for Nested Routing -->
           <li class="nav-item dropdown" [ngClass]="{'active': isSettingsActive}">
@@ -107,8 +131,8 @@
         <div class="user-profile" *ngIf="!isSidebarCollapsed">
           <img src="../../../assets/images/Anjan1.jpg" alt="User" class="avatar">
           <div class="user-info">
-            <h6 class="user-name">Anjan Sen</h6>
-            <small class="user-role">Administrator</small>
+            <h6 class="user-name">{{ currentUser.name }}</h6>
+            <small class="user-role">{{ currentUser.role }}</small>
           </div>
         </div>
         <button class="logout-btn" (click)="onLogout()">
