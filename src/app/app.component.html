@@ -71,26 +71,26 @@
           </li>
           <li class="nav-item" routerLinkActive="active">
             <a routerLink="/dashboard" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Dashboard' : null" (click)="onMobileNavClick()">
-              <i class="bi bi-speedometer2"></i> 
+              <i class="bi bi-grid-1x2-fill"></i> 
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/userManagement" class="nav-link" [attr.title]="isSidebarCollapsed ? 'UserManagement' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-people-fill"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">User Management</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/content" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Content' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-file-earmark-text-fill"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Content Management</span>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
             <a routerLink="/analytics" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Analytics' : null" (click)="onMobileNavClick()">
               <i class="bi-bar-chart-fill"></i> 
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Analytics</span>
-            </a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/products" class="nav-link" [attr.title]="isSidebarCollapsed ? 'Products' : null" (click)="onMobileNavClick()">
-              <i class="bi bi-box-fill"></i> 
-              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Products</span>
-            </a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/userManagement" class="nav-link" [attr.title]="isSidebarCollapsed ? 'UserManagement' : null" (click)="onMobileNavClick()">
-              <i class="bi bi-speedometer2"></i> 
-              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">User Management</span>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">

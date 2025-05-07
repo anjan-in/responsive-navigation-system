@@ -20,7 +20,7 @@ $border-radius: 8px;
   background-color: #f5f7fa;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
-  color: $dark-text;
+  // color: $dark-text;
 }
 
 // Header styling
@@ -35,7 +35,7 @@ $border-radius: 8px;
   h2 {
     margin: 0;
     font-weight: 500;
-    color: $primary-color;
+    color: $dark-text;
     font-size: 1.5rem;
   }
 
@@ -134,7 +134,7 @@ $border-radius: 8px;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 0.75rem;
     margin-bottom: 1rem;
-    color: $primary-color;
+    color: $dark-text;
     font-size: 1.25rem;
   }
 
@@ -178,7 +178,7 @@ $border-radius: 8px;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 0.75rem;
     margin-bottom: 1rem;
-    color: $primary-color;
+    color: $dark-text;
     font-size: 1.25rem;
   }
 
@@ -385,7 +385,7 @@ label {
     h3 {
       margin: 0;
       font-size: 1.1rem;
-      color: $primary-color;
+      color: $dark-text;
     }
   }
   
