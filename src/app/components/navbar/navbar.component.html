@@ -1,41 +1,97 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">MyApp</a>
-
-    <!-- Toggle button for mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
+<div class="navigation-container" [ngClass]="{'navigation-collapsed': isCollapsed}">
+  <!-- Sidebar Header -->
+  <div class="navigation-header">
+    <div class="brand">
+      <div class="logo">
+        <i class="bi bi-diagram-3-fill"></i>
+      </div>
+      <h2 class="brand-name" *ngIf="!isCollapsed">SaaSAdmin</h2>
+    </div>
+    <button class="nav-toggle" (click)="toggleCollapse()">
+      <i class="bi" [ngClass]="isCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
     </button>
+  </div>
 
-    <!-- Navbar Links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-        </li>
-
-        <!-- User Profile Dropdown with Multi-Level Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            <img src="https://avatars.githubusercontent.com/u/100259545?v=4&size=64" alt="User" class="user-icon"> Profile
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li>
-            <li class="dropdown dropend">
-              <a class="dropdown-item dropdown-toggle" href="#" id="settingsDropdown">Settings</a>
-              <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
-                <li><a class="dropdown-item" routerLink="/settings/general">General</a></li>
-                <li><a class="dropdown-item" routerLink="/settings/security">Security</a></li>
-              </ul>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" (click)="logout()">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
+  <!-- User Profile -->
+  <div class="user-profile" *ngIf="!isCollapsed">
+    <div class="user-avatar">
+      <img src="../../../assets/images/Anjan1.jpg" alt="User Avatar">
+      <span class="status-indicator online"></span>
+    </div>
+    <div class="user-info">
+      <h5>{{ userData.name }}</h5>
+      <p>{{ userData.role }}</p>
     </div>
   </div>
-</nav>
+  
+  <!-- Collapsed User Profile -->
+  <div class="collapsed-user-profile" *ngIf="isCollapsed">
+    <div class="user-avatar small">
+      <img src="../../../assets/images/Anjan1.jpg" alt="User Avatar">
+      <span class="status-indicator online"></span>
+    </div>
+  </div>
+
+  <!-- Search Box -->
+  <!-- <div class="nav-search" *ngIf="!isCollapsed">
+    <div class="input-group">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="Search...">
+    </div>
+  </div> -->
+
+  <!-- Navigation Menu -->
+  <nav class="navigation-menu">
+    <ul class="menu-items">
+      <li class="menu-item" *ngFor="let item of menuItems" 
+          [ngClass]="{'active': item.isActive, 'has-submenu': item.children?.length, 'expanded': item.expanded}">
+        
+        <!-- Main Menu Item -->
+        <a [routerLink]="item.children?.length ? null : item.route" 
+           (click)="item.children?.length ? toggleSubmenu(item) : null">
+          <i class="bi" [ngClass]="item.icon"></i>
+          <span class="menu-title" *ngIf="!isCollapsed">{{ item.title }}</span>
+          <span class="menu-badge" *ngIf="item.badge && !isCollapsed">{{ item.badge }}</span>
+          <i class="bi bi-chevron-down submenu-indicator" *ngIf="item.children?.length && !isCollapsed"></i>
+        </a>
+        
+        <!-- Submenu -->
+        <ul class="submenu" *ngIf="item.children?.length && (item.expanded || isCollapsed && isHovered(item))">
+          <li class="submenu-item" *ngFor="let child of item.children" [ngClass]="{'active': child.isActive}">
+            <a [routerLink]="child.route">
+              <i class="bi bi-circle-fill" *ngIf="!isCollapsed"></i>
+              <span>{{ child.title }}</span>
+              <span class="menu-badge" *ngIf="child.badge">{{ child.badge }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Bottom Actions -->
+  <div class="navigation-footer">
+    <ul class="footer-actions">
+      <!-- <li>
+        <a href="#" title="Settings">
+          <i class="bi bi-gear"></i>
+          <span *ngIf="!isCollapsed">Settings</span>
+        </a>
+      </li> -->
+      <li>
+        <a href="#" title="Help">
+          <i class="bi bi-question-circle"></i>
+          <span *ngIf="!isCollapsed">Help</span>
+        </a>
+      </li>
+      <li (click)="logout()">
+        <a title="Logout">
+          <i class="bi bi-box-arrow-right"></i>
+          <span *ngIf="!isCollapsed">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

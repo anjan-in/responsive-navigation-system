@@ -32,3 +32,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background: #555;
   }
 }
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
+.dark-theme {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
