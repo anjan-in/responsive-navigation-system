@@ -1,26 +1,11 @@
 // Modern dashboard styling with industry-standard aesthetics
 @import '../../../styles/variables';
 
-// Variables for consistent theming
-$primary-color: #008080;
-$secondary-color: #f49531;
-$success-color: #4caf50;
-$warning-color: #ffd900;
-$danger-color: #f44336;
-$dark-text: #2c3e50;
-$light-text: #ecf0f1;
-$light-bg: #f8f9fa;
-$card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-$transition-speed: 0.3s;
-$border-radius: 8px;
-
 // Base layout
 .dashboard-container {
   padding: 1.25rem 1.875rem;
   background-color: #f5f7fa;
-  min-height: 100vh;
   font-family: 'Roboto', sans-serif;
-  // color: $dark-text;
 }
 
 // Header styling
@@ -28,9 +13,7 @@ $border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0;
   padding-bottom: 1rem;
-  // border-bottom: 1px solid #e0e0e0;
 
   h2 {
     margin: 0;
@@ -66,8 +49,8 @@ $border-radius: 8px;
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .widget-card {
@@ -239,68 +222,6 @@ label {
   }
   &[style*="border-left-color: red"] {
     i { color: $danger-color; }
-  }
-}
-
-// Activity icons
-.activity-icon {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  margin-right: 0.75rem;
-  font-size: 1rem;
-  
-  &.create-icon {
-    background-color: rgba($success-color, 0.1);
-    color: $success-color;
-    
-    &::before {
-      content: '\F4E4'; // Bootstrap Icons - plus-circle
-      font-family: 'Bootstrap Icons';
-    }
-  }
-  
-  &.update-icon {
-    background-color: rgba($primary-color, 0.1);
-    color: $primary-color;
-    
-    &::before {
-      content: '\F5D1'; // Bootstrap Icons - pencil
-      font-family: 'Bootstrap Icons';
-    }
-  }
-  
-  &.delete-icon {
-    background-color: rgba($danger-color, 0.1);
-    color: $danger-color;
-    
-    &::before {
-      content: '\F5DE'; // Bootstrap Icons - trash
-      font-family: 'Bootstrap Icons';
-    }
-  }
-  
-  &.login-icon {
-    background-color: rgba($warning-color, 0.1);
-    color: $warning-color;
-    
-    &::before {
-      content: '\F47D'; // Bootstrap Icons - box-arrow-in-right
-      font-family: 'Bootstrap Icons';
-    }
-  }
-  
-  &.other-icon {
-    background-color: rgba(#6c757d, 0.1);
-    color: #6c757d;
-    
-    &::before {
-      content: '\F5EE'; // Bootstrap Icons - three-dots
-      font-family: 'Bootstrap Icons';
-    }
   }
 }
 
