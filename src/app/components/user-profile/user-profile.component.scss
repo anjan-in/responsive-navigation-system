@@ -1,0 +1,8 @@
+:host {
+    display: block;
+}
+
+.form-control:not([readonly]),
+.form-select:not([disabled]) {
+  background-color: rgba(13, 110, 253, 0.03);
+}
