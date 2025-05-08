@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.avatar {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  
+  &.status-active::after {
+    background-color: #28a745;
+  }
+  
+  &.status-inactive::after {
+    background-color: #dc3545;
+  }
+  
+  &.status-pending::after {
+    background-color: #ffc107;
+  }
+}
+
+.table {
+  th, td {
+    vertical-align: middle;
+  }
+}

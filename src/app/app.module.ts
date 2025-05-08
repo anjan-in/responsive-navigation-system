@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DemoSectionComponent } from './pages/demo-section/demo-section.component';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserManagementModule } from './pages/user-management/user-management.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { CommonModule } from '@angular/common';
     MatCheckboxModule,
     MatFormFieldModule,
     CommonModule,
+    NgbModule,
+    UserManagementModule
   ],
   providers: [],
   bootstrap: [AppComponent]
