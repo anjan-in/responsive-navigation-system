@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DemoSectionComponent } from './pages/demo-section/demo-section.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DemoSectionComponent } from './pages/demo-section/demo-section.componen
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
