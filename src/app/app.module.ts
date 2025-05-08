@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DemoSectionComponent } from './pages/demo-section/demo-section.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HomeComponent,
     ProfileComponent,
     LoginComponent,
+    DemoSectionComponent,
   ],
   imports: [
     BrowserModule,

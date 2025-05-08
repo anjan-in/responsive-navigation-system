@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('savedPassword');
       }
 
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/home']);
     } else {
       alert('Invalid credentials');
     }

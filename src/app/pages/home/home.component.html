@@ -1,37 +1,302 @@
-<div class="home-container">
-  <!-- Hero Section -->
-  <header class="hero">
-    <h1>Welcome to the Responsive Navigation System</h1>
-    <p>A flexible and adaptive navigation system built with Angular and Bootstrap.</p>
-    <a routerLink="/dashboard" class="btn-primary">Go to Dashboard</a>
-  </header>
 
-  <!-- Features Section -->
-  <section class="features">
-    <h2>Key Features</h2>
-    <div class="feature-list">
-      <div class="feature">
-        <i class="bi bi-grid"></i>
-        <h3>Dynamic Navigation</h3>
-        <p>Supports nested routing and dynamic menus for complex applications.</p>
+<!-- Interactive Hero Section -->
+<section class="hero-section position-relative overflow-hidden">
+  <!-- Background Shape Elements -->
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  
+  <div class="container position-relative p-5">
+    <div class="row align-items-center min-vh-75">
+      <!-- Content Column -->
+      <div class="col-lg-6 mb-5 mb-lg-0 text-center text-lg-start" data-aos="fade-right" data-aos-delay="200">
+        <span class="badge bg-primary-soft mb-3 px-3 py-2 fw-medium">Adaptive & Responsive</span>
+        <h1 class="display-4 fw-bold mb-4 hero-title">Responsive Navigation <span class="text-gradient">System</span></h1>
+        <p class="lead mb-5 text-secondary fw-normal" style="line-height: 1.25;">A flexible and adaptive navigation solution that transforms seamlessly across all devices for modern Angular applications</p>
+        
+        <div class="hero-buttons d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+          <button class="btn btn-primary px-4 py-2 d-inline-flex align-items-center" (click)="scrollToSection('features')">
+            <span class="fw-medium">Explore Features</span>
+            <i class="bi bi-arrow-right ms-2"></i>
+          </button>
+          <button class="btn btn-outline-secondary px-4 py-2 demo-btn" (click)="scrollToSection('implementation')">
+            <span class="fw-medium">View Demo</span>
+          </button>
+        </div>
+        
+        <!-- Engagement Metrics -->
+        <div class="metrics d-flex flex-wrap justify-content-center justify-content-lg-start mt-5 gap-4">
+          <div class="metric d-flex align-items-center">
+            <div class="metric-icon">
+              <i class="bi bi-stars"></i>
+            </div>
+            <div class="metric-content ms-3">
+              <h5 class="mb-0 fw-bold">99%</h5>
+              <p class="mb-0 small text-secondary">Satisfaction</p>
+            </div>
+          </div>
+          
+          <div class="metric d-flex align-items-center">
+            <div class="metric-icon">
+              <i class="bi bi-download"></i>
+            </div>
+            <div class="metric-content ms-3">
+              <h5 class="mb-0 fw-bold">10k+</h5>
+              <p class="mb-0 small text-secondary">Downloads</p>
+            </div>
+          </div>
+          
+          <div class="metric d-flex align-items-center">
+            <div class="metric-icon">
+              <i class="bi bi-people"></i>
+            </div>
+            <div class="metric-content ms-3">
+              <h5 class="mb-0 fw-bold">5k+</h5>
+              <p class="mb-0 small text-secondary">Users</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="feature">
-        <i class="bi bi-laptop"></i>
-        <h3>Responsive UI</h3>
-        <p>Optimized for all devices, from desktops to mobile screens.</p>
-      </div>
-      <div class="feature">
-        <i class="bi bi-speedometer2"></i>
-        <h3>Scalability</h3>
-        <p>Designed for enterprise-grade applications with future growth in mind.</p>
+      
+      <!-- Interactive Device Demo Column -->
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+        <div class="hero-animation position-relative">
+          <!-- Interactive Responsive Demo -->
+          <div class="responsive-demo">
+            <div class="device device-desktop" [class.active]="activeDevice === 'desktop'" (click)="setActiveDevice('desktop')">
+              <div class="device-header">
+                <div class="device-buttons">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="device-screen">
+                <div class="nav-demo">
+                  <div class="nav-item"></div>
+                  <div class="nav-item"></div>
+                  <div class="nav-item"></div>
+                  <div class="nav-item"></div>
+                </div>
+                <div class="content-demo">
+                  <div class="content-line"></div>
+                  <div class="content-line"></div>
+                  <div class="content-line"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="device device-tablet" [class.active]="activeDevice === 'tablet'" (click)="setActiveDevice('tablet')">
+              <div class="device-header">
+                <div class="device-buttons">
+                  <span></span>
+                </div>
+              </div>
+              <div class="device-screen">
+                <div class="nav-demo">
+                  <div class="nav-item"></div>
+                  <div class="nav-item"></div>
+                  <div class="nav-item"></div>
+                </div>
+                <div class="content-demo">
+                  <div class="content-line"></div>
+                  <div class="content-line"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="device device-mobile" [class.active]="activeDevice === 'mobile'" (click)="setActiveDevice('mobile')">
+              <div class="device-header">
+                <div class="device-buttons">
+                  <span></span>
+                </div>
+              </div>
+              <div class="device-screen">
+                <div class="nav-demo nav-mobile">
+                  <div class="burger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class="content-demo">
+                  <div class="content-line"></div>
+                  <div class="content-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Device Selection Pills -->
+          <div class="device-selector mt-4 d-flex justify-content-center gap-3">
+            <button class="btn btn-sm px-3 py-1" [class.btn-primary]="activeDevice === 'desktop'" 
+                    [class.btn-outline-secondary]="activeDevice !== 'desktop'"
+                    (click)="setActiveDevice('desktop')">
+              <i class="bi bi-display me-2"></i>Desktop
+            </button>
+            <button class="btn btn-sm px-3 py-1" [class.btn-primary]="activeDevice === 'tablet'" 
+                    [class.btn-outline-secondary]="activeDevice !== 'tablet'"
+                    (click)="setActiveDevice('tablet')">
+              <i class="bi bi-tablet me-2"></i>Tablet
+            </button>
+            <button class="btn btn-sm px-3 py-1" [class.btn-primary]="activeDevice === 'mobile'" 
+                    [class.btn-outline-secondary]="activeDevice !== 'mobile'"
+                    (click)="setActiveDevice('mobile')">
+              <i class="bi bi-phone me-2"></i>Mobile
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator">
+    <div class="mouse">
+      <div class="wheel"></div>
+    </div>
+    <p>Scroll to explore</p>
+  </div>
+</section>
 
-  <!-- Call to Action -->
-  <section class="cta">
-    <h2>Get Started</h2>
-    <p>Click below to explore the dashboard and experience its features.</p>
-    <a routerLink="/dashboard" class="btn-primary">Explore Dashboard</a>
-  </section>
-</div>
+<!-- Features Section -->
+<section id="features" class="features-section py-6">
+  <div class="container px-5">
+    <!-- Section Header -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-7 text-center">
+        <span class="badge bg-primary-soft text-primary mb-3 px-3 py-2 fw-medium">Why Choose Us</span>
+        <h2 class="display-5 fw-bold mb-4">Powerful Features for <span class="text-gradient">Modern Applications</span></h2>
+        <p class="lead text-secondary mb-0 fw-normal" style="line-height: 1.25;">Our navigation system seamlessly adapts to any device while providing a rich set of customization options</p>
+      </div>
+    </div>
+    
+    <!-- Features Grid -->
+    <div class="row g-4 g-lg-5">
+      <!-- Feature Item 1 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-layout-text-window"></i>
+          </div>
+          <h4 class="feature-title">Responsive Design</h4>
+          <p class="feature-description">Automatically adapts to any screen size with dynamic layout changes and optimal user experience across all devices.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Mobile</span>
+            <span class="feature-tag">Tablet</span>
+            <span class="feature-tag">Desktop</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature Item 2 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-speedometer2"></i>
+          </div>
+          <h4 class="feature-title">Performance Optimized</h4>
+          <p class="feature-description">Lightweight implementation with minimal DOM manipulations ensures smooth animations and transitions.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Fast</span>
+            <span class="feature-tag">Efficient</span>
+            <span class="feature-tag">Smooth</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature Item 3 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-brush"></i>
+          </div>
+          <h4 class="feature-title">Customizable Themes</h4>
+          <p class="feature-description">Easily customize colors, typography, and animations to match your brand identity.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Themes</span>
+            <span class="feature-tag">Colors</span>
+            <span class="feature-tag">Styling</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature Item 4 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h4 class="feature-title">A11y Compliant</h4>
+          <p class="feature-description">Built with accessibility in mind, supporting screen readers, keyboard navigation, and ARIA attributes.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">WCAG 2.1</span>
+            <span class="feature-tag">Screen Reader</span>
+            <span class="feature-tag">ARIA</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature Item 5 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-code-slash"></i>
+          </div>
+          <h4 class="feature-title">Easy Integration</h4>
+          <p class="feature-description">Simple import and setup process with comprehensive documentation and usage examples.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Angular</span>
+            <span class="feature-tag">TypeScript</span>
+            <span class="feature-tag">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Feature Item 6 -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="bi bi-hand-thumbs-up"></i>
+          </div>
+          <h4 class="feature-title">User Experience Focused</h4>
+          <p class="feature-description">Intuitive navigation patterns and smooth transitions create a delightful user experience.</p>
+          <div class="feature-tags">
+            <span class="feature-tag">Intuitive</span>
+            <span class="feature-tag">Consistent</span>
+            <span class="feature-tag">Delightful</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Features CTA -->
+    
+  </div>
+  
+  <!-- Background Element -->
+  <div class="features-bg-element"></div>
+</section>
+
+<app-demo-section></app-demo-section>
+
+<section class="features-section py-2">
+  <div class="container px-5">
+    <div class="row my-5">
+      <div class="col-12 text-center">
+        <div class="features-cta p-4 p-md-5" data-aos="zoom-in">
+          <h3 class="mb-4 fw-medium">Ready to enhance your application's navigation?</h3>
+          <p class="mb-4 fw-normal">Get started today and see the difference in your user engagement metrics</p>
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-light fw-medium px-4">View Documentation</button>
+            <button class="btn btn-primary fw-medium px-4" (click)="scrollToSection('implementation')">
+              Get Started <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
