@@ -11,6 +11,7 @@ import { UserProfileComponent } from 'src/app/components/user-profile/user-profi
 import { PermissionManagementComponent } from 'src/app/components/permission-management/permission-management.component';
 import { UserService } from 'src/app/services/user.service';
 import { PermissionService } from 'src/app/services/permission.service';
+import { UserFormComponent } from 'src/app/components/user-form/user-form.component';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { PermissionService } from 'src/app/services/permission.service';
     UserListComponent,
     UserProfileComponent,
     PermissionManagementComponent,
-    // UserFormComponent,
+    UserFormComponent,
     // UserFilterComponent
   ],
   imports: [
