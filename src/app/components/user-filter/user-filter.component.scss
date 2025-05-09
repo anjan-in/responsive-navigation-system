@@ -1,0 +1,15 @@
+
+:host {
+    display: block;
+}
+
+.filter-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    input, select {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

@@ -101,7 +101,7 @@ export class UserListComponent implements OnInit {
   }
 
   viewUserProfile(userId: number): void {
-    this.router.navigate(['/users/profile', userId]);
+    this.router.navigate(['/user-management/users/profile', userId]);
   }
 
   deleteUser(user: User, event: Event): void {

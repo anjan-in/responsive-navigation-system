@@ -76,9 +76,15 @@
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a routerLink="/userManagement" class="nav-link" [attr.title]="isSidebarCollapsed ? 'UserManagement' : null" (click)="onMobileNavClick()">
+            <a routerLink="/user-management/users" class="nav-link" [attr.title]="isSidebarCollapsed ? 'UserManagement' : null" (click)="onMobileNavClick()">
               <i class="bi bi-people-fill"></i> 
               <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">User Management</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/user-management/permissions" class="nav-link" [attr.title]="isSidebarCollapsed ? 'PermissionManagement' : null" (click)="onMobileNavClick()">
+              <i class="bi bi-shield-check"></i> 
+              <span class="nav-text" [ngClass]="{'hidden': isSidebarCollapsed}">Permission Management</span>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">

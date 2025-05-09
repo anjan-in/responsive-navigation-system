@@ -1,237 +1,237 @@
 <div class="container-fluid p-4">
     <div class="d-flex align-items-center mb-4">
-        <button class="btn btn-sm btn-outline-secondary me-3" routerLink="/users">
-            <i class="bi bi-arrow-left me-1"></i> Back
-        </button>
-        <h1 class="h3 mb-0">User Profile</h1>
+      <button class="btn btn-sm btn-outline-secondary me-3" routerLink="/user-management/users">
+        <i class="bi bi-arrow-left me-1"></i> Back
+      </button>
+      <h1 class="h3 mb-0">User Profile</h1>
     </div>
 
     <div *ngIf="loading" class="text-center py-5">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
 
     <div *ngIf="!loading && user" class="row">
-        <!-- User Info Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center pt-5">
-                    <div class="position-relative mb-4 mx-auto" style="width: 120px; height: 120px;">
-                        <img 
-                        [src]="user.avatar || '/assets/images/default-avatar.png'" 
-                        alt="User avatar" 
-                        class="rounded-circle border" 
-                        style="width: 120px; height: 120px; object-fit: cover;"
-                        >
-                        <span class="position-absolute bottom-0 end-0 p-1 rounded-circle" [ngClass]="{
-                        'bg-success': user.status === 'active',
-                        'bg-danger': user.status === 'inactive',
-                        'bg-warning': user.status === 'pending'
-                        }" style="width: 20px; height: 20px; border: 3px solid white;"></span>
-                    </div>
-                
-                    <h4>{{ user.firstName }} {{ user.lastName }}</h4>
-                    <p class="text-muted mb-2">{{ user.email }}</p>
-                    
-                    <div class="mb-3">
-                        <span class="badge rounded-pill" [ngClass]="{
-                        'bg-primary': user.role === 'Admin',
-                        'bg-info': user.role === 'Editor',
-                        'bg-secondary': user.role === 'Viewer'
-                        }">{{ user.role }}</span>
-                        <span class="badge rounded-pill ms-2" [ngClass]="{
-                        'bg-success': user.status === 'active',
-                        'bg-danger': user.status === 'inactive',
-                        'bg-warning': user.status === 'pending'
-                        }">{{ user.status | titlecase }}</span>
-                    </div>
-                    
-                    <div class="d-flex justify-content-center gap-2">
-                        <button class="btn btn-sm btn-outline-primary" (click)="toggleEditMode()">
-                            <i class="bi" [ngClass]="editMode ? 'bi-x-circle' : 'bi-pencil'"></i>
-                            {{ editMode ? 'Cancel' : 'Edit' }}
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="card-footer bg-light">
-                    <div class="row text-center">
-                        <div class="col-6 border-end">
-                            <div class="small text-muted">Created</div>
-                            <div>{{ user.createdAt | date:'mediumDate' }}</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="small text-muted">Last Login</div>
-                            <div>{{ user.lastLogin ? (user.lastLogin | date:'mediumDate') : 'Never' }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Form Card -->
-    <div class="col-lg-8">
-      <div class="card shadow-sm mb-4">
-        <div class="card-header bg-light">
-          <h5 class="card-title mb-0">User Information</h5>
-        </div>
-        <div class="card-body">
-          <form [formGroup]="userForm" (ngSubmit)="saveUser()">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="firstName" class="form-label">First Name</label>
-                <input 
-                  type="text" 
-                  id="firstName" 
-                  class="form-control" 
-                  formControlName="firstName"
-                  [readonly]="!editMode"
-                  [ngClass]="{'is-invalid': userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched}"
-                >
-                <div class="invalid-feedback">First name is required</div>
-              </div>
-              <div class="col-md-6">
-                <label for="lastName" class="form-label">Last Name</label>
-                <input 
-                  type="text" 
-                  id="lastName" 
-                  class="form-control" 
-                  formControlName="lastName"
-                  [readonly]="!editMode"
-                  [ngClass]="{'is-invalid': userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched}"
-                >
-                <div class="invalid-feedback">Last name is required</div>
-              </div>
-            </div>
-            
-            <div class="mb-3">
-              <label for="email" class="form-label">Email Address</label>
-              <input 
-                type="email" 
-                id="email" 
-                class="form-control" 
-                formControlName="email"
-                [readonly]="!editMode"
-                [ngClass]="{'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}"
-              >
-              <div class="invalid-feedback">
-                <ng-container *ngIf="userForm.get('email')?.errors?.['required']">Email is required</ng-container>
-                <ng-container *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email address</ng-container>
-              </div>
-            </div>
-            
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="role" class="form-label">Role</label>
-                <select 
-                  id="role" 
-                  class="form-select" 
-                  formControlName="role"
-                  [disabled]="!editMode"
-                  [ngClass]="{'is-invalid': userForm.get('role')?.invalid && userForm.get('role')?.touched}"
-                >
-                  <option value="">Select Role</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Editor">Editor</option>
-                  <option value="Viewer">Viewer</option>
-                </select>
-                <div class="invalid-feedback">Role is required</div>
-              </div>
-              <div class="col-md-6">
-                <label for="status" class="form-label">Status</label>
-                <select 
-                  id="status" 
-                  class="form-select" 
-                  formControlName="status"
-                  [disabled]="!editMode"
-                  [ngClass]="{'is-invalid': userForm.get('status')?.invalid && userForm.get('status')?.touched}"
-                >
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="pending">Pending</option>
-                </select>
-                <div class="invalid-feedback">Status is required</div>
-              </div>
-            </div>
-            
-            <div *ngIf="editMode" class="d-flex justify-content-end">
-              <button 
-                type="button" 
-                class="btn btn-outline-secondary me-2" 
-                (click)="toggleEditMode()"
-              >Cancel</button>
-              <button 
-                type="submit" 
-                class="btn btn-primary" 
-                [disabled]="userForm.invalid || saving"
-              >
-                <span *ngIf="saving" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Save Changes
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      
-      <!-- Permissions Card -->
-      <div class="card shadow-sm">
-        <div class="card-header bg-light">
-          <h5 class="card-title mb-0">Permissions</h5>
-        </div>
-        <div class="card-body">
-          <div class="mb-4">
-            <h6>Role Permissions</h6>
-            <p class="text-muted small">These permissions are assigned based on the user's role.</p>
-            
-            <div class="row g-3">
-              <ng-container *ngFor="let permission of getUserRolePermissions()">
-                <div class="col-md-6">
-                  <div class="d-flex align-items-center">
-                    <div class="bg-light rounded-circle p-2 me-2">
-                      <i class="bi bi-check-circle-fill text-success"></i>
-                    </div>
-                    <div>
-                      <div class="fw-medium">{{ permission.name }}</div>
-                      <div class="small text-muted">{{ permission.description }}</div>
-                    </div>
+      <!-- User Info Card -->
+      <div class="col-sm-12 col-xl-4 mb-4">
+          <div class="card shadow-sm h-100">
+              <div class="card-body text-center pt-5">
+                  <div class="position-relative mb-4 mx-auto" style="width: 120px; height: 120px;">
+                      <img 
+                      [src]="user.avatar || '/assets/images/default-avatar.png'" 
+                      alt="User avatar" 
+                      class="rounded-circle border" 
+                      style="width: 120px; height: 120px; object-fit: cover;"
+                      >
+                      <span class="position-absolute bottom-0 end-0 p-1 rounded-circle" [ngClass]="{
+                      'bg-success': user.status === 'active',
+                      'bg-danger': user.status === 'inactive',
+                      'bg-warning': user.status === 'pending'
+                      }" style="width: 20px; height: 20px; border: 3px solid white;"></span>
                   </div>
-                </div>
-              </ng-container>
-            </div>
+              
+                  <h4>{{ user.firstName }} {{ user.lastName }}</h4>
+                  <p class="text-muted mb-2">{{ user.email }}</p>
+                  
+                  <div class="mb-3">
+                      <span class="badge rounded-pill" [ngClass]="{
+                      'bg-primary': user.role === 'Admin',
+                      'bg-info': user.role === 'Editor',
+                      'bg-secondary': user.role === 'Viewer'
+                      }">{{ user.role }}</span>
+                      <span class="badge rounded-pill ms-2" [ngClass]="{
+                      'bg-success': user.status === 'active',
+                      'bg-danger': user.status === 'inactive',
+                      'bg-warning': user.status === 'pending'
+                      }">{{ user.status | titlecase }}</span>
+                  </div>
+                  
+                  <div class="d-flex justify-content-center gap-2">
+                      <button class="btn btn-sm btn-outline-primary" (click)="toggleEditMode()">
+                          <i class="bi" [ngClass]="editMode ? 'bi-x-circle' : 'bi-pencil'"></i>
+                          {{ editMode ? 'Cancel' : 'Edit' }}
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i> Delete
+                      </button>
+                  </div>
+              </div>
+              
+              <div class="card-footer bg-light">
+                  <div class="row text-center">
+                      <div class="col-6 border-end">
+                          <div class="small text-muted">Created</div>
+                          <div>{{ user.createdAt | date:'mediumDate' }}</div>
+                      </div>
+                      <div class="col-6">
+                          <div class="small text-muted">Last Login</div>
+                          <div>{{ user.lastLogin ? (user.lastLogin | date:'mediumDate') : 'Never' }}</div>
+                      </div>
+                  </div>
+              </div>
           </div>
-          
-          <div *ngIf="user && user.role !== 'Admin'">
-            <h6>Additional Permissions</h6>
-            <p class="text-muted small">These are extra permissions granted to this user specifically.</p>
-            
-            <div class="alert alert-info" *ngIf="!user.permissions || user.permissions.length === 0">
-              <i class="bi bi-info-circle me-2"></i>
-              This user has no additional permissions beyond their role.
-            </div>
-            
-            <div class="row g-3" *ngIf="user.permissions && user.permissions.length > 0">
-              <ng-container *ngFor="let permName of user.permissions">
-                <!-- <ng-container *ngIf="!getUserRolePermissions().some(p => p.name === permName)">
+      </div>
+
+      <!-- User Form Card -->
+      <div class="col-sm-12 col-xl-8">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-light">
+            <h5 class="card-title mb-0">User Information</h5>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    class="form-control" 
+                    formControlName="firstName"
+                    [readonly]="!editMode"
+                    [ngClass]="{'is-invalid': userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched}"
+                  >
+                  <div class="invalid-feedback">First name is required</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    class="form-control" 
+                    formControlName="lastName"
+                    [readonly]="!editMode"
+                    [ngClass]="{'is-invalid': userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched}"
+                  >
+                  <div class="invalid-feedback">Last name is required</div>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  class="form-control" 
+                  formControlName="email"
+                  [readonly]="!editMode"
+                  [ngClass]="{'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}"
+                >
+                <div class="invalid-feedback">
+                  <ng-container *ngIf="userForm.get('email')?.errors?.['required']">Email is required</ng-container>
+                  <ng-container *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email address</ng-container>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="role" class="form-label">Role</label>
+                  <select 
+                    id="role" 
+                    class="form-select" 
+                    formControlName="role"
+                    [disabled]="!editMode"
+                    [ngClass]="{'is-invalid': userForm.get('role')?.invalid && userForm.get('role')?.touched}"
+                  >
+                    <option value="">Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Viewer">Viewer</option>
+                  </select>
+                  <div class="invalid-feedback">Role is required</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status</label>
+                  <select 
+                    id="status" 
+                    class="form-select" 
+                    formControlName="status"
+                    [disabled]="!editMode"
+                    [ngClass]="{'is-invalid': userForm.get('status')?.invalid && userForm.get('status')?.touched}"
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
+                  </select>
+                  <div class="invalid-feedback">Status is required</div>
+                </div>
+              </div>
+              
+              <div *ngIf="editMode" class="d-flex justify-content-end">
+                <button 
+                  type="button" 
+                  class="btn btn-outline-secondary me-2" 
+                  (click)="toggleEditMode()"
+                >Cancel</button>
+                <button 
+                  type="submit" 
+                  class="btn btn-primary" 
+                  [disabled]="userForm.invalid || saving"
+                >
+                  <span *ngIf="saving" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Permissions Card -->
+        <div class="card shadow-sm">
+          <div class="card-header bg-light">
+            <h5 class="card-title mb-0">Permissions</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <h6>Role Permissions</h6>
+              <p class="text-muted small">These permissions are assigned based on the user's role.</p>
+              
+              <div class="row g-3">
+                <ng-container *ngFor="let permission of getUserRolePermissions()">
                   <div class="col-md-6">
                     <div class="d-flex align-items-center">
                       <div class="bg-light rounded-circle p-2 me-2">
-                        <i class="bi bi-plus-circle-fill text-primary"></i>
+                        <i class="bi bi-check-circle-fill text-success"></i>
                       </div>
                       <div>
-                        <div class="fw-medium">{{ permName }}</div>
-                        <div class="small text-muted">
-                          {{ permissions.find(p => p.name === permName)?.description || 'Additional permission' }}
-                        </div>
+                        <div class="fw-medium">{{ permission.name }}</div>
+                        <div class="small text-muted">{{ permission.description }}</div>
                       </div>
                     </div>
                   </div>
-                </ng-container> -->
-              </ng-container>
+                </ng-container>
+              </div>
+            </div>
+            
+            <div *ngIf="user && user.role !== 'Admin'">
+              <h6>Additional Permissions</h6>
+              <p class="text-muted small">These are extra permissions granted to this user specifically.</p>
+              
+              <div class="alert alert-info" *ngIf="!user.permissions || user.permissions.length === 0">
+                <i class="bi bi-info-circle me-2"></i>
+                This user has no additional permissions beyond their role.
+              </div>
+              
+              <div class="row g-3" *ngIf="user.permissions && user.permissions.length > 0">
+                <ng-container *ngFor="let permName of user.permissions">
+                  <!-- <ng-container *ngIf="!getUserRolePermissions().some(p => p.name === permName)">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light rounded-circle p-2 me-2">
+                          <i class="bi bi-plus-circle-fill text-primary"></i>
+                        </div>
+                        <div>
+                          <div class="fw-medium">{{ permName }}</div>
+                          <div class="small text-muted">
+                            {{ permissions.find(p => p.name === permName)?.description || 'Additional permission' }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container> -->
+                </ng-container>
+              </div>
             </div>
           </div>
         </div>
