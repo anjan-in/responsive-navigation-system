@@ -29,10 +29,13 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // const savedState = localStorage.getItem('sidebarState');
-    // if (savedState) {
-    //   this.isSidebarCollapsed = savedState === 'collapsed';
-    // }
+    const savedState = localStorage.getItem('sidebarState');
+    if (savedState) {
+      this.isSidebarCollapsed = savedState === 'collapsed';
+    }
+
+    // Set initial login page status
+    this.isLoginPage = this.router.url.includes('/login');
 
     // this.router.events
     // .pipe(
