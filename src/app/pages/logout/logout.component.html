@@ -1,0 +1,27 @@
+<div class="logout-container">
+    <div class="logout-card">
+        <div class="logout-header">
+            <i class="fa fa-sign-out-alt logout-icon"></i>
+            <h2>Signing Out</h2>
+        </div>
+        
+        <div class="logout-body">
+            <p class="logout-message">{{ logoutMessage }}</p>
+            
+            <div class="countdown-timer">
+                <div class="timer-circle">
+                <span class="timer-value">{{ countdownValue }}</span>
+                </div>
+            </div>
+            
+            <div class="logout-actions">
+                <button class="btn-cancel" (click)="cancelLogout()">
+                Cancel
+                </button>
+                <button class="btn-logout" (click)="logoutNow()">
+                Logout Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

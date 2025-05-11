@@ -20,6 +20,7 @@ import { DemoSectionComponent } from './pages/demo-section/demo-section.componen
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserManagementModule } from './pages/user-management/user-management.module';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { UserManagementModule } from './pages/user-management/user-management.mo
     ProfileComponent,
     LoginComponent,
     DemoSectionComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
