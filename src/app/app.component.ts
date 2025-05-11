@@ -110,11 +110,11 @@ export class AppComponent implements OnInit {
     // Example: this.authService.logout();
     this.router.navigate(['/login']);
   }
-  private handleMobileSidebarOnRouteChange(): void {
-    // Close sidebar automatically on mobile when navigating
-    if (window.innerWidth <= 768) {
-      this.isSidebarCollapsed = true;
-    }
-  }
+  // private handleMobileSidebarOnRouteChange(): void {
+  //   // Close sidebar automatically on mobile when navigating
+  //   if (window.innerWidth <= 768) {
+  //     this.isSidebarCollapsed = true;
+  //   }
+  // }
   
 }

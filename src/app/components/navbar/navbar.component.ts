@@ -1,23 +1,9 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+// import { Router } from '@angular/router';
+import { Router, NavigationEnd, Event as NavigationEvent } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { filter } from 'rxjs/operators';
 
-interface MenuItem {
-  title: string;
-  icon: string;
-  route?: string;
-  isActive?: boolean;
-  badge?: string | number;
-  children?: MenuItem[];
-  expanded?: boolean;
-  hovering?: boolean;
-}
-
-interface UserData {
-  name: string;
-  role: string;
-  email: string;
-}
 
 @Component({
   selector: 'app-navbar',
@@ -25,23 +11,17 @@ interface UserData {
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  isCollapsed = false;
-  menuItems: MenuItem[] = [];
-  userData: UserData = {
-    name: 'Alex Johnson',
-    role: 'Admin',
-    email: 'alex@example.com'
+  isLoginPage = false;
+  isSidebarCollapsed = false;
+  settingsMenuOpen = false;
+  isSettingsActive = false;
+  mobileSidebarOpen = false;
+  mobileUserMenuOpen = false;
+  currentUser = {
+    name: 'Anjan Sen',
+    role: 'Administrator',
+    avatar: '../../../assets/images/Anjan1.jpg'
   };
-  
-  // Track window size for responsive behavior
-  screenWidth: number = window.innerWidth;
-  
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.screenWidth = window.innerWidth;
-    // Auto-collapse on small screens
-    this.isCollapsed = this.screenWidth < 992;
-  }
 
   constructor(
     private router: Router,
@@ -49,139 +29,85 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Auto-collapse on mobile devices
-    this.isCollapsed = this.screenWidth < 992;
-    
-    this.initMenuItems();
+    const savedState = localStorage.getItem('sidebarState');
+    if (savedState) {
+      this.isSidebarCollapsed = savedState === 'collapsed';
+    }
+
+    // Set initial login page status
+    this.isLoginPage = this.router.url.includes('/login');
+
+    // this.router.events
+    // .pipe(
+    //   filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
+    // )
+    // .subscribe((event: NavigationEnd) => {
+    //   this.isSettingsActive = event.url.includes('/settings');
+    //   this.handleMobileSidebarOnRouteChange();
+    // });
+  
+    this.router.events
+      .pipe(
+        filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
+      )
+      // .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isLoginPage = event.url.includes('/login');
+        this.isSettingsActive = event.url.includes('/settings');
+        
+        // Close mobile menus when route changes
+        this.mobileSidebarOpen = false;
+        this.mobileUserMenuOpen = false;
+      });
   }
 
-  initMenuItems(): void {
-    this.menuItems = [
-      {
-        title: 'Dashboard',
-        icon: 'bi-grid-1x2-fill',
-        route: '/dashboard',
-        isActive: true
-      },
-      {
-        title: 'Analytics',
-        icon: 'bi-bar-chart-fill',
-        route: '/analytics'
-      },
-      {
-        title: 'User Management',
-        icon: 'bi-people-fill',
-        children: [
-          {
-            title: 'User List',
-            route: '/users',
-            icon: 'bi-person',
-          },
-          {
-            title: 'User Groups',
-            route: '/user-groups',
-            icon: 'bi-people',
-          },
-          {
-            title: 'Permissions',
-            route: '/permissions',
-            icon: 'bi-shield-check'
-          }
-        ]
-      },
-      {
-        title: 'Content',
-        icon: 'bi-file-earmark-text-fill',
-        children: [
-          {
-            title: 'Articles',
-            route: '/articles',
-            icon: 'bi-file-earmark-text',
-          },
-          {
-            title: 'Media',
-            route: '/media',
-            icon: 'bi-image-fill',
-          },
-          {
-            title: 'Comments',
-            route: '/comments',
-            badge: 5,
-            icon: 'bi-chat-dots-fill'
-          }
-        ]
-      },
-      {
-        title: 'Products',
-        icon: 'bi-box-fill',
-        route: '/products'
-      },
-      {
-        title: 'Orders',
-        icon: 'bi-cart-fill',
-        route: '/orders',
-        badge: 'New'
-      },
-      {
-        title: 'Reports',
-        icon: 'bi-clipboard-data-fill',
-        route: '/reports'
-      },
-      {
-        title: 'Settings',
-        icon: 'bi-gear-fill',
-        children: [
-          {
-            title: 'General',
-            route: '/settings/general',
-            icon: 'bi-sliders',
-          },
-          {
-            title: 'Security',
-            route: '/settings/security',
-            icon: 'bi-shield-lock-fill'
-          },
-          {
-            title: 'Notifications',
-            route: '/settings/notifications',
-            icon: 'bi-bell-fill'
-          }
-        ]
-      }
-    ];
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    // Save state to localStorage
+    // localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
+
+    // // Update main content class to match sidebar state - this ensures proper margins
+    // const mainContent = document.querySelector('.main-content');
+    // if (mainContent) {
+    //   if (this.isSidebarCollapsed) {
+    //     mainContent.classList.add('expanded');
+    //   } else {
+    //     mainContent.classList.remove('expanded');
+    //   }
+    // }
+  }
+  toggleMobileSidebar(): void {
+    this.mobileSidebarOpen = !this.mobileSidebarOpen;
+    if (this.mobileSidebarOpen) {
+      // Close user menu if sidebar is opened
+      this.mobileUserMenuOpen = false;
+    }
   }
 
-  toggleCollapse(): void {
-    this.isCollapsed = !this.isCollapsed;
+  closeMobileSidebar(): void {
+    this.mobileSidebarOpen = false;
+  }
+  onMobileNavClick(): void {
+    // Close mobile sidebar when a navigation link is clicked
+    if (window.innerWidth <= 768) {
+      this.mobileSidebarOpen = false;
+    }
+  }
+  toggleMobileUserMenu(): void {
+    this.mobileUserMenuOpen = !this.mobileUserMenuOpen;
+    if (this.mobileUserMenuOpen) {
+      // Close sidebar if user menu is opened
+      this.mobileSidebarOpen = false;
+    }
+  }
+  toggleSettingsMenu(): void {
+    this.settingsMenuOpen = !this.settingsMenuOpen;
   }
 
-  toggleSubmenu(item: MenuItem): void {
-    // Close all other open submenus
-    this.menuItems.forEach(menuItem => {
-      if (menuItem !== item && menuItem.expanded) {
-        menuItem.expanded = false;
-      }
-    });
-    
-    // Toggle current submenu
-    item.expanded = !item.expanded;
-  }
-
-  isHovered(item: MenuItem): boolean {
-    return item.hovering === true;
-  }
-
-  // Track mouse hover for submenus in collapsed mode
-  onMenuItemMouseEnter(item: MenuItem): void {
-    item.hovering = true;
-  }
-
-  onMenuItemMouseLeave(item: MenuItem): void {
-    item.hovering = false;
-  }
-
-  logout(): void {
-    this.authService.logout();
+  onLogout(): void {
+    // Add your logout logic here
+    console.log('Logging out...');
+    // Example: this.authService.logout();
     this.router.navigate(['/login']);
   }
 
