@@ -18,7 +18,7 @@
       
       <div class="mobile-user-dropdown" [ngClass]="{'show': mobileUserMenuOpen}">
         <div class="mobile-user-info">
-          <h6 class="user-name">John Doe</h6>
+          <h6 class="user-name">Anjan Sen</h6>
           <small class="user-role">Administrator</small>
         </div>
         
@@ -49,10 +49,12 @@
   <nav class="sidebar" [ngClass]="{'collapsed': isSidebarCollapsed, 'show-mobile': mobileSidebarOpen}">
     <!-- Logo / Brand Section -->
     <div class="sidebar-header">
-      <div class="logo">
-        <img *ngIf="isSidebarCollapsed" src="../assets/images/iconLogo.svg" alt="Logo" class="logo-icon">
-        <img *ngIf="!isSidebarCollapsed" src="../assets/images/logo_navSys.svg" alt="Logo" class="logo-full">
-      </div>
+      <a [routerLink]="['/home']">
+        <div class="logo">
+          <img *ngIf="isSidebarCollapsed" src="../assets/images/iconLogo.svg" alt="Logo" class="logo-icon">
+          <img *ngIf="!isSidebarCollapsed" src="../assets/images/logo_navSys.svg" alt="Logo" class="logo-full">
+        </div>
+      </a>
       <!-- Toggle Button Inside Sidebar (Hidden on mobile) -->
       <button class="toggle-btn" (click)="toggleSidebar()">
         <i class="bi" [ngClass]="isSidebarCollapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
@@ -133,11 +135,13 @@
 
     <!-- User Profile & Logout Section -->
     <div class="sidebar-footer">
+      <!-- <div class="user-profile" *ngIf="!isSidebarCollapsed && currentUser"> -->
       <div class="user-profile" *ngIf="!isSidebarCollapsed">
-        <img src="../../../assets/images/Anjan1.jpg" alt="User" class="avatar">
+        <!-- <img src="../../../assets/images/Anjan1.jpg" alt="User" class="avatar"> -->
+         <img [src]="currentUser?.avatar || '../../../assets/images/Anjan1.jpg'" alt="User" class="avatar">
         <div class="user-info">
-          <h6 class="user-name">{{ currentUser.name }}</h6>
-          <small class="user-role">{{ currentUser.role }}</small>
+          <h6 class="user-name">{{ currentUser?.name || 'User' }}</h6>
+          <small class="user-role">{{ currentUser?.role || 'Guest' }}</small>
         </div>
       </div>
       <button class="logout-btn" (click)="onLogout()">

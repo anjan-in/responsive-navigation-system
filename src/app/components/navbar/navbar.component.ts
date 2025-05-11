@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { Router, NavigationEnd, Event as NavigationEvent } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, User } from 'src/app/services/auth.service';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,18 +10,20 @@ import { filter } from 'rxjs/operators';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy  {
   isLoginPage = false;
-  isSidebarCollapsed = false;
+  currentUser: User | null = null;
+  isSidebarCollapsed: boolean = false;
   settingsMenuOpen = false;
   isSettingsActive = false;
   mobileSidebarOpen = false;
   mobileUserMenuOpen = false;
-  currentUser = {
-    name: 'Anjan Sen',
-    role: 'Administrator',
-    avatar: '../../../assets/images/Anjan1.jpg'
-  };
+  // currentUser = {
+  //   name: 'Anjan Sen',
+  //   role: 'Administrator',
+  //   avatar: '../../../assets/images/Anjan1.jpg'
+  // };
+  private userSubscription: Subscription | null = null;
 
   constructor(
     private router: Router,
@@ -29,52 +31,67 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Load saved sidebar state if available
     const savedState = localStorage.getItem('sidebarState');
     if (savedState) {
       this.isSidebarCollapsed = savedState === 'collapsed';
     }
 
+    // Subscribe to user authentication state
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+    });
+
     // Set initial login page status
     this.isLoginPage = this.router.url.includes('/login');
-
-    // this.router.events
-    // .pipe(
-    //   filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
-    // )
-    // .subscribe((event: NavigationEnd) => {
-    //   this.isSettingsActive = event.url.includes('/settings');
-    //   this.handleMobileSidebarOnRouteChange();
-    // });
+    console.log('Initial route:', this.router.url, 'isLoginPage:', this.isLoginPage);
   
+    // Listen for route changes
     this.router.events
       .pipe(
         filter((event: NavigationEvent): event is NavigationEnd => event instanceof NavigationEnd)
       )
-      // .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.isLoginPage = event.url.includes('/login');
         this.isSettingsActive = event.url.includes('/settings');
         
         // Close mobile menus when route changes
-        this.mobileSidebarOpen = false;
-        this.mobileUserMenuOpen = false;
+        // this.mobileSidebarOpen = false;
+        // this.mobileUserMenuOpen = false;
+
+        this.handleMobileSidebarOnRouteChange();
       });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscription to prevent memory leaks
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
     // Save state to localStorage
-    // localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
+    localStorage.setItem('sidebarState', this.isSidebarCollapsed ? 'collapsed' : 'expanded');
 
-    // // Update main content class to match sidebar state - this ensures proper margins
-    // const mainContent = document.querySelector('.main-content');
-    // if (mainContent) {
-    //   if (this.isSidebarCollapsed) {
-    //     mainContent.classList.add('expanded');
-    //   } else {
-    //     mainContent.classList.remove('expanded');
-    //   }
-    // }
+    // Update main content class to match sidebar state
+    this.updateMainContentClass();
+  }
+  private updateMainContentClass(): void {
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      if (this.isSidebarCollapsed) {
+        mainContent.classList.add('expanded');
+      } else {
+        mainContent.classList.remove('expanded');
+      }
+    }
+  }
+  handleMobileSidebarOnRouteChange(): void {
+    // Close mobile menus when route changes
+    this.mobileSidebarOpen = false;
+    this.mobileUserMenuOpen = false;
   }
   toggleMobileSidebar(): void {
     this.mobileSidebarOpen = !this.mobileSidebarOpen;
@@ -104,10 +121,19 @@ export class NavbarComponent implements OnInit {
     this.settingsMenuOpen = !this.settingsMenuOpen;
   }
 
+  get userName(): string {
+    return this.currentUser && 'name' in this.currentUser 
+      ? (this.currentUser as any).name 
+      : 'User';
+  }
+
+  get userRole(): string {
+    return this.currentUser?.role || 'Guest';
+  }
+
   onLogout(): void {
-    // Add your logout logic here
-    console.log('Logging out...');
-    // Example: this.authService.logout();
+    this.authService.logout();
+    console.log('Logged out successfully');
     this.router.navigate(['/login']);
   }
 
