@@ -8,7 +8,7 @@
 
     <form (ngSubmit)="onLogin()" #loginForm="ngForm" [class.submitted]="isSubmitted">
       <div class="form-group" [class.error]="usernameError">
-        <label for="username">Username or Email</label>
+        <label for="username">Username</label>
         <div class="input-with-icon">
           <i class="bi bi-person icon-left"></i>
           <input 
@@ -21,7 +21,7 @@
             #usernameInput="ngModel"
             [class.is-invalid]="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched || isSubmitted)"
             autocomplete="username"
-            placeholder="Enter your username or email">
+            placeholder="Enter your username">
           <div class="input-status-icon" *ngIf="usernameInput.dirty || usernameInput.touched">
             <i class="bi" [ngClass]="usernameInput.valid ? 'bi-check-circle success' : 'bi-x-circle error'"></i>
           </div>

@@ -1,17 +1,17 @@
 
 // Variables
-$primary-color: #4f46e5;
-$primary-hover: #4338ca;
+$primary-color: #1328fb;
+$primary-hover: #1326fbab;
 $error-color: #ef4444;
 $success-color: #10b981;
 $text-color: #1f2937;
 $text-light: #6b7280;
 $border-color: #e5e7eb;
-$bg-gradient-start: #f9fafb;
-$bg-gradient-end: #f3f4f6;
-$card-bg: #ffffff;
-$input-bg: #f9fafb;
-$box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+// $bg-gradient-start: #f9fafb;
+// $bg-gradient-end: #f3f4f6;
+$card-bg: linear-gradient(180deg, #ddf1ff, #8bcaef);
+$input-bg: #ffffff50;
+$box-shadow: 3px 3px 6px #ffffff40, -3px -3px 6px #00000050;
 $transition: all 0.3s ease;
 
 // Reset and Base Styles
@@ -35,7 +35,7 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
-  background: linear-gradient(135deg, $bg-gradient-start, $bg-gradient-end);
+  background: linear-gradient(0deg, #ddf1ff, #8bcaef);
 }
 
 // Login Card
@@ -95,7 +95,7 @@ form {
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 0;
   font-size: 14px;
   font-weight: 500;
   color: $text-color;
@@ -152,7 +152,7 @@ label {
   height: 46px;
   padding: 10px 12px 10px 38px;
   font-size: 14px;
-  border: 1px solid $border-color;
+  border: none;
   border-radius: 8px;
   background-color: $input-bg;
   color: $text-color;
